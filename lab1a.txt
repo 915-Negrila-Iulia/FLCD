@@ -1,0 +1,64 @@
+
+p1. compute max and min of 3 numbers.
+int a;
+int b;
+int c;
+read>>a;
+read>>b;
+read>>c;
+int max=a;
+int min=a;
+if b>max do
+max=b;
+done
+if c>max do
+max=c;
+done
+if b<min do
+min=b;
+done
+if c<min do
+min=c;
+done
+write<<max;
+write<<min;
+
+p2. verify if a number is prime.
+int n;
+read>>n;
+if n==1 or n==2 do
+write<<"not-prime";
+int div=2;
+int isPrime=1;
+while d<=n/2 and isPrime==1 do
+if n%d==0 do
+isPrime=0;
+done
+d=d+1;
+done
+if isPrime==0 do
+write<<"not-prime";
+done
+else do
+write<<"prime";
+done
+
+p3. compute the sum of n numbers
+array int[10] myArr;
+int n;
+read>>n;
+int sum=0;
+int i;
+int elem;
+for i=0; i<n; i=i+1 do
+read>>elem;
+sum=sum+elem;
+done
+write<<sum;
+
+p1err. lexical errors
+###
+int n;
+read>>n;
+4n;
+write<<"error;
