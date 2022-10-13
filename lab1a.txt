@@ -37,7 +37,7 @@ done
 d=d+1;
 done
 if isPrime==0 do
-write<<"not-prime";
+write<<"not0prime";
 done
 else do
 write<<"prime";
