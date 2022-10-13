@@ -17,8 +17,9 @@ Sintactical rules:
 <stmt> ::= <assignstmt> | <iostmt> | <ifstmt> | <whilestmt> | <forstmt>
 <stmtlist> ::= <stmt> | <stmt> ; <stmtlist>
 <condition> ::= <expression><relation><expression>
-<ifstmt> ::= if <condition> do <stmt> done | if <condition> do <stmt> done else do <stmt> done
-<whilestmt> ::= while <condition> do <stmt> done
+<conditionlist> ::= <condition>and<condition> | <condition>or<condition>
+<ifstmt> ::= if <conditionlist> do <stmt> done | if <conditionlist> do <stmt> done else do <stmt> done
+<whilestmt> ::= while <conditionlist> do <stmt> done
 <forstmt> ::= for <startExpr>, <stopExpr>, <noStepsExpr> do <stmt> done
 <startExpr> ::= <identifier>=<minus><nonzero> | <identifier>=<digit>
 <stopExpr> ::= <identifier><ineqRelation><minus><nonzero> | <identifier><ineqRelation><digit>
