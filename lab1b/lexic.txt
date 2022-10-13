@@ -1,0 +1,32 @@
+Alphabet:
+a. Upper (A-Z) and lower case letters (a-z) of the English alphabet
+b. Decimal digits (0-9)
+c. Dash character '-'
+
+1. Lexic:
+
+a. Special symbols, representing:
+- operators
+	+ - * % / < <= = >= ==
+- separators
+	space ; do done >> << "" ''
+- reserved words
+	read write and or do done if else while for int char array string
+
+b. identifiers - a sequence of letters and  digits, such that the first character is a letter; the rule is:
+- identifier = letter{letter|digit}
+- letter = "a" | "b" | ... | "z" | "A" | "B" | ... | "Z"
+- digit = "0" | "1" | ... | "9"
+
+c. constants
+1. integer - rule:
+	sign = "+" | "-"
+	nonzero = "1" | ... | "9"
+	no = nonzero{digit} | "0"
+	noconst = [sign]no
+2. character - rule:
+	constchar = 'letter' | 'digit'
+3. string - rule:
+	char = letter | digit
+	string = {char}
+	conststring = "string"
