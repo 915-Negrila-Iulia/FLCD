@@ -16,7 +16,9 @@ Sintactical rules:
 <decllist> ::= <declaration> | <declaration><decllist>
 <stmt> ::= <assignstmt> | <iostmt> | <ifstmt> | <whilestmt> | <forstmt>
 <stmtlist> ::= <stmt> | <stmt> ; <stmtlist>
-<condition> ::= <expression><relation><expression>
+<constExpr> ::= '<letter>' | "<identifier>"
+<allExpr> ::= <constExpr> | <expression>
+<condition> ::= <allExpr><relation><allExpr>
 <conditionlist> ::= <condition>and<condition> | <condition>or<condition>
 <ifstmt> ::= if <conditionlist> do <stmt> done | if <conditionlist> do <stmt> done else do <stmt> done
 <whilestmt> ::= while <conditionlist> do <stmt> done
@@ -27,9 +29,8 @@ Sintactical rules:
 <noStepsExpr> ::= <identifier>=<identifier><operation><digit>
 <operation> ::= + | - | * | /
 <assignmnt> ::= <identifier>=<expression>
-<expression> ::= <term> | <expression>
 <term> ::= <factor> | <term>*<factor> | <term>/<factor> | <term>%<factor>
-<factor> ::= <expression> | <identifier>
+<factor> ::= <expression> | <identifier> | <digit> | <minus><digit>
 <expression> ::= <term> | <expression>+<term> | <expression>-<term>
 <relation> ::= <ineqRelation> | = | == | !=
 <inputStmt> ::= read >> <identifier>
