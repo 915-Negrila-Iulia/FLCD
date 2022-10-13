@@ -1,5 +1,4 @@
-2. Syntax:
-The words - predefined tokens are specified between " and ":
+2. Syntax (BNF is used):
 Sintactical rules:
 <minus> ::= -
 <nonzero> ::= 1 | ... | 9
