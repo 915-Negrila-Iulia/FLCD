@@ -1,0 +1,18 @@
+int n;
+read>>n;
+if n==1 or n==2 do
+write<<"not0prime";
+int div=2;
+int isPrime=1;
+while d<=n/2 and isPrime==1 do
+if n%d==0 do
+isPrime=0;
+done
+d=d+1;
+done
+if isPrime==0 do
+write<<"not0prime";
+done
+else do
+write<<"prime";
+done

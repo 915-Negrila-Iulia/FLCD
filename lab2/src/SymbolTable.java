@@ -25,10 +25,7 @@ public class SymbolTable {
 
     private boolean isKey(String key){
         int hashKey = hash(key);
-        if(elements.contains(hashKey)){
-            return true;
-        }
-        return false;
+        return elements.get(hashKey).contains(key);
     }
 
     public AbstractMap.SimpleEntry<Integer, Integer> addSymbol(String symbol){
@@ -45,7 +42,6 @@ public class SymbolTable {
         else{
             int hashPosition = hash(symbol);
             elements.get(hashPosition).add(symbol);
-            return new AbstractMap.SimpleEntry<>(hashPosition,0);
         }
         return new AbstractMap.SimpleEntry<>(-1,-1);
     }

@@ -9,14 +9,15 @@ public class Scanner {
     private final String identifierRegex = "^([a-zA-Z][a-zA-Z\\d]*)$";
     private final String digitRegex = "-?[1-9]\\d*|0";
     private final String charRegex = "'[a-zA-z\\d]'";
-
     private final PIF pifTable;
     private final SymbolTable constSymbolTable;
     private final SymbolTable identifSymbolTable;
+    private final String programFile;
     private static final String ID = "id";
     private static final String CONST = "const";
 
-    public Scanner(SymbolTable identifSymbolTable, SymbolTable constSymbolTable, PIF pifTable) {
+    public Scanner(SymbolTable identifSymbolTable, SymbolTable constSymbolTable, PIF pifTable, String programFile) {
+        this.programFile = programFile;
         this.identifSymbolTable = identifSymbolTable;
         this.constSymbolTable = constSymbolTable;
         this.pifTable = pifTable;
@@ -74,6 +75,16 @@ public class Scanner {
         return false;
     }
 
+    public void addST(String symbol) throws Exception{
+        if(!this.isToken(symbol)) {
+            if (this.isIdentifier(symbol)) {
+                identifSymbolTable.addSymbol(symbol);
+            } else if (this.isConstant(symbol)) {
+                constSymbolTable.addSymbol(symbol);
+            }
+        }
+    }
+
     public void addPIF(String symbol) throws Exception {
         if(this.isToken(symbol)){
             pifTable.add(new AbstractMap.SimpleEntry<>(-1,-1),symbol);
@@ -88,6 +99,32 @@ public class Scanner {
         }
         else{
             throw new Exception("Lexical error");
+        }
+    }
+
+    public void scanLine(String line) throws Exception {
+        String splitters = "((?= |;)|(?<= |;))";
+        String[] tokens = line.split(splitters);
+        for (String symbol : tokens) {
+            if(!Objects.equals(symbol, " ")) {
+                addST(symbol);
+                addPIF(symbol);
+            }
+        }
+    }
+
+    public void scan(){
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(new FileReader(programFile));
+            String line = reader.readLine();
+            while (line != null) {
+                scanLine(line);
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -6,6 +6,7 @@
 <
 <=
 =
+>
 >=
 ==
 space
@@ -16,6 +17,8 @@ done
 <<
 "
 '
+[
+]
 read
 write
 and
