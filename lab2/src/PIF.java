@@ -15,7 +15,7 @@ public class PIF {
 
     @Override
     public String toString() {
-        String stString = "";
+        String stString = "ProgramInternalForm\n";
         for (int i=0; i<elements.size(); i++) {
             stString += "( ";
             stString += "("+elements.get(i).getKey().getKey()+", "+elements.get(i).getKey().getValue()+"), ";

@@ -48,7 +48,7 @@ public class SymbolTable {
 
     @Override
     public String toString() {
-        String stString = "";
+        String stString = "SymbolTable (implemented as a hashTable)\n";
         for (int i=0; i<size; i++) {
             stString += "( ";
             for(String item: elements.get(i)){

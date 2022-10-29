@@ -1,5 +1,7 @@
 import java.io.*;
+import java.nio.file.StandardOpenOption;
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,6 +11,7 @@ public class Scanner {
     private final String identifierRegex = "^([a-zA-Z][a-zA-Z\\d]*)$";
     private final String digitRegex = "-?[1-9]\\d*|0";
     private final String charRegex = "'[a-zA-z\\d]'";
+    private final String delimitersRegex = "\\s|;|,";
     private final PIF pifTable;
     private final SymbolTable constSymbolTable;
     private final SymbolTable identifSymbolTable;
@@ -98,12 +101,12 @@ public class Scanner {
             pifTable.add(positionST,CONST);
         }
         else{
-            throw new Exception("Lexical error");
+            throw new Exception("Lexical error " + "symbol: " + symbol);
         }
     }
 
     public void scanLine(String line) throws Exception {
-        String splitters = "((?= |;)|(?<= |;))";
+        String splitters = "((?="+delimitersRegex+")|(?<="+delimitersRegex+"))";
         String[] tokens = line.split(splitters);
         for (String symbol : tokens) {
             if(!Objects.equals(symbol, " ")) {
@@ -115,16 +118,56 @@ public class Scanner {
 
     public void scan(){
         BufferedReader reader;
+        int lineNo = 1;
         try {
             reader = new BufferedReader(new FileReader(programFile));
             String line = reader.readLine();
             while (line != null) {
                 scanLine(line);
+                lineNo++;
                 line = reader.readLine();
             }
             reader.close();
+            System.out.println("Lexically correct!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage() + " line: " + lineNo);
+        }
+    }
+
+    public void outputScanner(String filename) {
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter(filename, false));
+            writer.print("");
+            writer.print(this.toString());
+            writer.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    public void outputTable(String tableStr, String filename){
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter(filename, false));
+            writer.print("");
+            writer.print(tableStr);
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String toString() {
+        String[] splitted = programFile.split("\\\\");
+        String programName = splitted[splitted.length-1];
+        String lexicallyScannedProgram = "Program " + programName +"\n";
+        lexicallyScannedProgram += "--------------------------------------------------------------------------------\n";
+        lexicallyScannedProgram += "Identifiers\n" + identifSymbolTable;
+        lexicallyScannedProgram += "--------------------------------------------------------------------------------\n";
+        lexicallyScannedProgram += "Constants\n" + constSymbolTable;
+        lexicallyScannedProgram += "--------------------------------------------------------------------------------\n";
+        lexicallyScannedProgram += pifTable;
+        return lexicallyScannedProgram;
+    }
+
 }

@@ -1,0 +1,4 @@
+int n;
+read >> n;
+4n;
+write << "error;
