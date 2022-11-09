@@ -1,17 +1,10 @@
 import java.io.*;
-import java.nio.file.StandardOpenOption;
 import java.util.AbstractMap;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Scanner {
-
-    private final String identifierRegex = "^([a-zA-Z][a-zA-Z\\d]*)$";
-    private final String digitRegex = "-?[1-9]\\d*|0";
-    private final String charRegex = "'[a-zA-z\\d]'";
-    private final String delimitersRegex = "\\s|;|,";
     private final PIF pifTable;
     private final SymbolTable constSymbolTable;
     private final SymbolTable identifSymbolTable;
@@ -27,6 +20,7 @@ public class Scanner {
     }
 
     public Boolean isIdentifier(String symbol){
+        String identifierRegex = "^([a-zA-Z][a-zA-Z\\d]*)$";
         Pattern p = Pattern.compile(identifierRegex);
         if (symbol == null) {
             return false;
@@ -36,14 +30,17 @@ public class Scanner {
     }
 
     public Boolean isConstant(String symbol){
+        String identifierRegex = "^([a-zA-Z][a-zA-Z\\d]*)$";
         Pattern p;
         if (symbol == null) {
             return false;
         }
         // check if digit
+        String digitRegex = "-?[1-9]\\d*|0";
         p = Pattern.compile(digitRegex);
         Matcher m1 = p.matcher(symbol);
         // check if letter
+        String charRegex = "'[a-zA-z\\d]'";
         p = Pattern.compile(charRegex);
         Matcher m2 = p.matcher(symbol);
         // check if word
@@ -106,7 +103,8 @@ public class Scanner {
     }
 
     public void scanLine(String line) throws Exception {
-        String splitters = "((?="+delimitersRegex+")|(?<="+delimitersRegex+"))";
+        String delimitersRegex = "\\s|;|,";
+        String splitters = "((?="+ delimitersRegex +")|(?<="+ delimitersRegex +"))";
         String[] tokens = line.split(splitters);
         for (String symbol : tokens) {
             if(!Objects.equals(symbol, " ")) {
