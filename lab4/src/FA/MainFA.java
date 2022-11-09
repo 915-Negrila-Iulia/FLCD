@@ -16,7 +16,7 @@ public class MainFA {
     }
 
     public static void main(String[] args) {
-        FiniteAutomata fa = new FiniteAutomata("F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab2\\src\\FA\\FA.in");
+        FiniteAutomata fa = new FiniteAutomata("F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab4\\src\\FA\\FA.in");
         fa.readFromFile();
 //        System.out.println(fa);
 //        System.out.println(fa.isDFA());
