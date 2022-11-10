@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class FiniteAutomata {
     private List<String> setOfStates;
@@ -99,6 +100,42 @@ public class FiniteAutomata {
             }
         }
         return true;
+    }
+
+    public String getNextState(String startState, String value){
+        /*
+         * Get list of endStates based on given startState and value from the Transitions of the FA
+         */
+        List<String> endStates = new ArrayList<>();
+        for(Transition transition: transitions){
+            if(Objects.equals(transition.getStartState(), startState) &&
+                    Objects.equals(transition.getValue(), value)){
+                endStates.addAll(transition.getEndState());
+            }
+        }
+        if(endStates.size() == 1){
+            return endStates.get(0); // return only one element because the function is used only for DFA
+        }
+        return "false";
+    }
+
+    public boolean isAccepted(String sequence){
+        /*
+         *
+         */
+        String startState = initialState;
+        String lastEndState = initialState;
+        String[] seqElements = sequence.split("");
+        for(String value: seqElements){
+            String endState = getNextState(startState,value);
+            if(Objects.equals(endState, "false")){
+                return false;
+            }
+            startState = endState;
+            lastEndState = endState;
+        }
+        // check if last endState is from the set of finalStates
+        return setOfFinalStates.contains(lastEndState);
     }
 
     @Override

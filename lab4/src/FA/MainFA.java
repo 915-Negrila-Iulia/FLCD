@@ -49,7 +49,10 @@ public class MainFA {
                     System.out.println(fa.isDFA());
                     break;
                 case 7:
-                    System.out.println("TODO");
+                    System.out.println("Input sequence: ");
+                    String sequence = in.next();
+                    System.out.println(fa.isAccepted(sequence));
+                    System.out.println(sequence);
             }
         }
     }
