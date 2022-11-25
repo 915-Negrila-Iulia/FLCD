@@ -94,7 +94,9 @@ public class Grammar {
     public boolean isCFG(){
         // All productions should have a single nonTerminal in the LHS
         for(Production production: listOfProductions){
-            if(production.getKey().length()!=1 || !setOfNonTerminals.contains(production.getKey())){
+            String[] lhsNonTerminals = production.getKey().split(" ");
+            String firstNonTerminal = lhsNonTerminals[0];
+            if(lhsNonTerminals.length != 1 || !setOfNonTerminals.contains(firstNonTerminal)){
                 return false;
             }
         }
