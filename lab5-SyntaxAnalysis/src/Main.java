@@ -16,8 +16,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Grammar gr = new Grammar("F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab5-SyntaxAnalysis\\src\\g1.txt");
-        //Grammar gr = new Grammar("F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab5-SyntaxAnalysis\\src\\g2.txt");
+        //Grammar gr = new Grammar("F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab5-SyntaxAnalysis\\src\\g1.txt");
+        Grammar gr = new Grammar("F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab5-SyntaxAnalysis\\src\\g2.txt");
 
         gr.readFromFile();
 

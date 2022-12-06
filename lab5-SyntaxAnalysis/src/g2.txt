@@ -1,8 +1,39 @@
-minus,nonzero,digit,digitSequence,nr
--,0,1,2,3,4,5,6,7,8,9
-nr
+minus nonzero digit digitSequence nr letter letterSequence identifier type1 arraydecl type declaration decllist stmt stmtlist constExpr allExpr condition conditionlist ifstmt whilestmt forstmt startExpr stopExpr ineqRelation noStepsExpr operation assignmnt term factor expression relation inputStmt outputStmt iostmt program
+- 0 1 2 3 4 5 6 7 8 9 [ ] int char string array ; , ' " and or if do done else = while for < <= > >= + - * / % == != >> <<
+program
 minus -> -
 nonzero -> 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 digit -> 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 digitSequence -> digit | digit digitSequence
 nr -> nonzero | nonzero digitSequence
+letter -> a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z | A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z
+letterSequence -> letter | letter letterSequence
+identifier -> letter | letterSequence | letterSequence digitSequence | letterSequence digitSequence identifier
+type1 -> int | char | string | array
+arraydecl -> array type1 [ nr ]
+type -> type1 | arraydecl
+declaration -> identifier type
+decllist -> declaration | declaration decllist
+stmt -> assignstmt | iostmt | ifstmt | whilestmt | forstmt
+stmtlist -> stmt | stmt ; stmtlist
+constExpr -> ' letter ' | " identifier "
+allExpr -> constExpr | expression
+condition -> allExpr relation allExpr
+conditionlist -> condition and condition | condition or condition
+ifstmt -> if conditionlist do stmt done | if conditionlist do stmt done else do stmt done
+whilestmt -> while conditionlist do stmt done
+forstmt -> for startExpr , stopExpr , noStepsExpr do stmt done
+startExpr -> identifier = minus nonzero | identifier = digit
+stopExpr -> identifier ineqRelation minus nonzero | identifier ineqRelation digit
+ineqRelation -> < | <= | > | >=
+noStepsExpr -> identifier = identifier operation digit
+operation -> + | - | * | /
+assignmnt -> identifier = expression
+term -> factor | term * factor | term / factor | term % factor
+factor -> expression | identifier | digit | minus digit
+expression -> term | expression + term | expression - term
+relation -> ineqRelation | = | == | !=
+inputStmt -> read >> identifier
+outputStmt -> write << identifier | write << " identifier "
+iostmt -> inputStmt | outputStmt
+program -> decllist | stmtlist | decllist program | stmtlist program

@@ -48,7 +48,7 @@ public class Grammar {
     }
 
     public void readSet(String line, List<String> set){
-        String[] tokens = line.split(",");
+        String[] tokens = line.split(" ");
         set.addAll(Arrays.asList(tokens));
     }
 
