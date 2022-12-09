@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -15,11 +17,15 @@ public class Main {
         System.out.println("\n");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         //Grammar gr = new Grammar("F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab5-SyntaxAnalysis\\src\\g1.txt");
-        Grammar gr = new Grammar("F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab5-SyntaxAnalysis\\src\\g2.txt");
+        //Grammar gr = new Grammar("F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab5-SyntaxAnalysis\\src\\g2.txt");
+        Grammar gr = new Grammar("F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab5-SyntaxAnalysis\\src\\g3.txt");
 
         gr.readFromFile();
+
+        Parser parser = new Parser(gr.getFilename(),"");
+        parser.descRecParsing(Arrays.asList("a","a","c","b","c"));
 
         Scanner read = new Scanner(System.in);
         while(true) {

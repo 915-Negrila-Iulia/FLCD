@@ -34,6 +34,10 @@ public class Grammar {
         return startingSymbol;
     }
 
+    public String getFilename() {
+        return filename;
+    }
+
     public List<String> getProductionsForNonTerminal(String nonTerminal) throws Exception {
         if(!setOfNonTerminals.contains(nonTerminal)){
             throw new Exception("Given nonTerminal does not exist");
@@ -45,6 +49,11 @@ public class Grammar {
             }
         }
         return prodValues;
+    }
+
+    public List<String> getSymbolsOfRHS(String productionRHS){
+        String[] tokens = productionRHS.split(" ");
+        return Arrays.asList(tokens);
     }
 
     public void readSet(String line, List<String> set){
