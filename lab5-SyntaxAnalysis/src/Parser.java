@@ -24,6 +24,10 @@ public class Parser {
         this.index = 0;
     }
 
+    public Grammar getGrammar() {
+        return grammar;
+    }
+
     private void expand() throws Exception {
         // WHEN: head of input stack is a nonterminal
         String nonterminal = inputStack.pop();
@@ -120,10 +124,20 @@ public class Parser {
         } else {
             System.out.println("Sequence accepted");
         }
+        displayFinalProductionsList();
+    }
+
+    private void displayFinalProductionsList(){
         List<String> productionsString = workingStack.stream()
                 .filter((elem)->(grammar.getSetOfNonTerminals().contains(elem.getKey())))
                 .map((elem)->(elem.getKey()+elem.getValue().toString()))
                 .collect(Collectors.toList());
         System.out.println("productions string: "+productionsString);
+    }
+
+    public List<Pair<String,Integer>> getFinalProductionsList(){
+        return workingStack.stream()
+                .filter((elem)->(grammar.getSetOfNonTerminals().contains(elem.getKey())))
+                .collect(Collectors.toList());
     }
 }

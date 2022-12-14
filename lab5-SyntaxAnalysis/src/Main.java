@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -26,6 +27,9 @@ public class Main {
 
         Parser parser = new Parser(gr.getFilename(),"");
         parser.descRecParsing(Arrays.asList("a","a","c","b","c"));
+
+        ParserOutput parserOutput = new ParserOutput(parser,parser.getFinalProductionsList());
+        System.out.println(parserOutput.getDerivations());
 
         Scanner read = new Scanner(System.in);
         while(true) {
