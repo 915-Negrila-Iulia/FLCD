@@ -1,0 +1,13 @@
+int a;
+int b;
+read >> a;
+b = 1;
+int i;
+i = 3;
+while i > 0 do
+write << b;
+i = i - 1;
+done;
+if b > a do
+write << b;
+done

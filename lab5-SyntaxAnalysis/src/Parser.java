@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Stack;
@@ -6,17 +7,15 @@ import java.util.stream.Collectors;
 public class Parser {
     private String grammarFilename;
     private Grammar grammar;
-    private String output;
     private Stack<Pair<String,Integer>> workingStack; /// alpha - stores the way the parse is built
     private Stack<String> inputStack; /// beta - part of output to be built
     private String state; /// q-normal, b-back, f-final, e-error
     private int index; /// position of current symbol in input sequence
 
-    public Parser(String grammarFilename, String output) {
+    public Parser(String grammarFilename) {
         this.grammarFilename = grammarFilename;
         this.grammar = new Grammar(grammarFilename);
         this.grammar.readFromFile(); // read grammar from file !!!
-        this.output = output;
         this.workingStack = new Stack<>();
         this.inputStack = new Stack<>();
         this.inputStack.push(grammar.getStartingSymbol());
@@ -29,6 +28,7 @@ public class Parser {
     }
 
     private void expand() throws Exception {
+        System.out.println("expand");
         // WHEN: head of input stack is a nonterminal
         String nonterminal = inputStack.pop();
         workingStack.push(new Pair<>(nonterminal,0));
@@ -40,6 +40,7 @@ public class Parser {
     }
 
     private void advance(){
+        System.out.println("advance");
         // WHEN: head of input stack is a terminal = current symbol from input
         String terminal = inputStack.pop();
         workingStack.push(new Pair<>(terminal,-1));
@@ -47,11 +48,13 @@ public class Parser {
     }
 
     private void momentaryInsuccess(){
+        System.out.println("momentary insuccess");
         // WHEN: head of input stack is a terminal ≠ current symbol from input
         state = "b";
     }
 
     private void back(){
+        System.out.println("back");
         // WHEN: head of working stack is a terminal
         String terminal = workingStack.pop().getKey();
         inputStack.push(terminal);
@@ -59,12 +62,15 @@ public class Parser {
     }
 
     private void anotherTry() throws Exception {
+        System.out.println("another try");
         // WHEN: head of working stack is a nonterminal
         Pair<String,Integer> pair = workingStack.pop(); // (nonterminal, production number) get last production (e.g. S3)
         String nonterminal = pair.getKey();
         Integer productionNumber = pair.getValue();
         List<String> productions = grammar.getProductionsForNonTerminal(nonterminal); // get set of productions for nonterminal
         int noOfProds = productions.size();
+        System.out.println("nonterminal: "+nonterminal);
+        System.out.println("noOfProds: "+noOfProds);
         if(productionNumber+1 < noOfProds){ // check if there is another production to try with
             state = "q";
             Pair<String,Integer> newPair = new Pair<>(nonterminal,productionNumber+1);
@@ -83,9 +89,13 @@ public class Parser {
             }
         } else if(index == 0 && Objects.equals(nonterminal, grammar.getStartingSymbol())){
             state = "e";
+            System.out.println(nonterminal+"===="+grammar.getStartingSymbol());
         } else { // state is "b"
-            int oldProductionSize = productions.get(productionNumber).length();
+            System.out.println("old prod: "+productions.get(productionNumber));
+            int oldProductionSize = productions.get(productionNumber).split(" ").length;
             while(oldProductionSize != 0){
+                System.out.println("prod: "+productions.get(productionNumber));
+                System.out.println("old prod size: "+oldProductionSize);
                 inputStack.pop(); // delete all symbols from the old production
                 oldProductionSize--;
             }
@@ -94,15 +104,18 @@ public class Parser {
     }
 
     private void success(){
+        System.out.println("success");
         state = "f";
     }
 
     public void descRecParsing(List<String> inputSeq) throws Exception {
         while(!Objects.equals(state, "f") && !Objects.equals(state, "e")){
+            System.out.println(inputStack.toString());
+            System.out.println(state);
             if(Objects.equals(state, "q")){
                 if(index == inputSeq.size() && inputStack.isEmpty()){
                     this.success();
-                } else {
+                } else if(!inputStack.isEmpty()){
                     if(grammar.getSetOfNonTerminals().contains(inputStack.peek())){
                         this.expand();
                     } else if(index < inputSeq.size() && Objects.equals(inputStack.peek(), inputSeq.get(index))) {
@@ -110,6 +123,8 @@ public class Parser {
                     } else {
                         this.momentaryInsuccess();
                     }
+                } else {
+                    state = "b";
                 }
             } else if(Objects.equals(state, "b")) {
                 if(grammar.getSetOfTerminals().contains(workingStack.peek().getKey())){
@@ -124,15 +139,16 @@ public class Parser {
         } else {
             System.out.println("Sequence accepted");
         }
-        displayFinalProductionsList();
+
     }
 
-    private void displayFinalProductionsList(){
-        List<String> productionsString = workingStack.stream()
+    public List<String> displayFinalProductionsList(){
+        List<String> result = new ArrayList<>();
+        result =  workingStack.stream()
                 .filter((elem)->(grammar.getSetOfNonTerminals().contains(elem.getKey())))
                 .map((elem)->(elem.getKey()+elem.getValue().toString()))
                 .collect(Collectors.toList());
-        System.out.println("productions string: "+productionsString);
+        return result;
     }
 
     public List<Pair<String,Integer>> getFinalProductionsList(){

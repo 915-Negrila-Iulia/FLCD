@@ -1,10 +1,12 @@
 import java.io.*;
 import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Scanner {
+public class MyScanner {
     private final PIF pifTable;
     private final SymbolTable constSymbolTable;
     private final SymbolTable identifSymbolTable;
@@ -12,7 +14,7 @@ public class Scanner {
     private static final String ID = "id";
     private static final String CONST = "const";
 
-    public Scanner(SymbolTable identifSymbolTable, SymbolTable constSymbolTable, PIF pifTable, String programFile) {
+    public MyScanner(SymbolTable identifSymbolTable, SymbolTable constSymbolTable, PIF pifTable, String programFile) {
         this.programFile = programFile;
         this.identifSymbolTable = identifSymbolTable;
         this.constSymbolTable = constSymbolTable;
@@ -112,6 +114,33 @@ public class Scanner {
                 addPIF(symbol);
             }
         }
+    }
+
+    public List getElementsFromFile(){
+        List result = new ArrayList();
+        String delimitersRegex = "\\s|;|,";
+        String splitters = "((?="+ delimitersRegex +")|(?<="+ delimitersRegex +"))";
+        BufferedReader reader;
+        int lineNo = 1;
+        try {
+            reader = new BufferedReader(new FileReader(programFile));
+            String line = reader.readLine();
+            while (line != null) {
+                String[] tokens = line.split(splitters);
+                for (String symbol : tokens) {
+                    if (!Objects.equals(symbol, " ")) {
+                        result.add(symbol);
+                    }
+                }
+                lineNo++;
+                line = reader.readLine();
+            }
+            reader.close();
+            System.out.println("Lexically correct!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage() + " line: " + lineNo);
+        }
+        return result;
     }
 
     public void scan(){

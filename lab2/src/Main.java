@@ -18,10 +18,10 @@ public class Main {
         SymbolTable constSTErr = new SymbolTable(19);
         PIF pifTableErr = new PIF();
 
-        Scanner scanner1 = new Scanner(identifST1,constST1,pifTable1,"F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab2\\src\\programs\\in\\p1.txt");
-        Scanner scanner2 = new Scanner(identifST2,constST2,pifTable2,"F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab2\\src\\programs\\in\\p2.txt");
-        Scanner scanner3 = new Scanner(identifST3,constST3,pifTable3,"F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab2\\src\\programs\\in\\p3.txt");
-        Scanner scannerErr = new Scanner(identifSTErr,constSTErr,pifTableErr,"F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab2\\src\\programs\\in\\p1err.txt");
+        MyScanner scanner1 = new MyScanner(identifST1,constST1,pifTable1,"F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab2\\src\\programs\\in\\p1.txt");
+        MyScanner scanner2 = new MyScanner(identifST2,constST2,pifTable2,"F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab2\\src\\programs\\in\\p2.txt");
+        MyScanner scanner3 = new MyScanner(identifST3,constST3,pifTable3,"F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab2\\src\\programs\\in\\p3.txt");
+        MyScanner scannerErr = new MyScanner(identifSTErr,constSTErr,pifTableErr,"F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab2\\src\\programs\\in\\p1err.txt");
 
         scanner1.scan(); scanner1.outputScanner("F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab2\\src\\programs\\out\\p1.out");
         scanner1.outputTable(identifST1.toString(), "F:\\An3 Sem1\\FLCD\\labs\\labFLCD\\lab2\\src\\programs\\tablesOut\\p1-IST.out");
