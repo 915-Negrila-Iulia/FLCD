@@ -1,2 +1,7 @@
 int a;
 int b;
+read >> a;
+b = 10;
+if a>b then
+write << a;
+done
