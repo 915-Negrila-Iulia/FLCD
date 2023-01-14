@@ -1,0 +1,47 @@
+%{
+#include <stdio.h>
+#include <string.h>
+#include "parser.tab.h"
+%}
+
+%option noyywrap
+
+ID              [a-zA-Z][a-zA-Z0-9]*
+NUMBER          [-]?[1-9][0-9]*|0
+CHAR            [\'][a-zA-Z0-9][\']
+WORD            [\"][a-zA-Z0-9]*[\"]
+CONST           {NUMBER}|{CHAR}|{WORD}
+
+%%
+
+"int"           {printf("Reserved word: %s\n", yytext); return INT;}
+"string"        {printf("Reserved word: %s\n", yytext); return STRING;}
+"char"          {printf("Reserved word: %s\n", yytext); return CHAR;}
+"if"            {printf("Reserved word: %s\n", yytext); return IF;}
+"read"          {printf("Reserved word: %s\n", yytext); return READ;}
+"write"         {printf("Reserved word: %s\n", yytext); return WRITE;}
+"and"		{printf("Reserved word: %s\n", yytext); return AND;}
+"or"		{printf("Reserved word: %s\n", yytext); return OR;}
+
+"+"             {printf("Operator: %s\n", yytext); return ADD;}
+"-"             {printf("Operator: %s\n", yytext); return SUB;}
+"*"             {printf("Operator: %s\n", yytext); return MUL;}
+"/"             {printf("Operator: %s\n", yytext); return DIV;}
+"="             {printf("Operator: %s\n", yytext); return ASIGN;}
+"=="            {printf("Operator: %s\n", yytext); return EQ;}
+"!="            {printf("Operator: %s\n", yytext); return NE;} 
+"<"             {printf("Operator: %s\n", yytext); return LESS;}
+">"             {printf("Operator: %s\n", yytext); return GREATER;}
+">>"            {printf("Operator: %s\n", yytext); return RIGHTSHIFT;}
+"<<"		{printf("Operator: %s\n", yytext); return LEFTSHIFT;}
+
+"do"		{printf("Separator: %s\n", yytext); return DO;}
+"done"		{printf("Separator: %s\n", yytext); return DONE;}
+";"             {printf("Separator: %s\n", yytext); return SEMICOLON;}
+
+{ID}            {printf("Identifier: %s\n", yytext); return ID;}
+{CONST}         {printf("Constant: %s\n", yytext); return CONST;}
+
+.               {printf("Lexical error\n", yytext);}
+
+%%
